@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/addpatient.css">
+</head>
+<body>
+    <div class="left-page">
+        <div class="left-inner">
+        <a href="/dashboard" class="tagbutton">Dashboard</a>
+        <a href="/" class="tagbutton">Logout</a>
+        </div>
+    </div>
+    <div class="right-page">
+        <h1>Enter the Patient Details</h1>
+        <form action="/addpatient" method="post">
+            <div class="contentbox">
+                <div class="inputbox">
+                    <span>Patient_id:</span>
+                    <input type="number" name="patient_id">
+                </div>
+                <div class="inputbox">
+                    <span>Patient_name:</span>
+                    <input type="text" name="patient_Name">
+                </div>
+                <div class="inputbox">
+                    <span>Patient_age:</span>
+                    <input type="text" name="patient_age">
+                </div>
+                <div class="inputbox">
+                    <span>Patient_mobile</span>
+                    <input type="text" name="patient_mobile">
+                </div>
+                <div class="inputbox">
+                    <span>Patient_address:</span>
+                    <input type="text" name="patient_address">
+                </div>
+                <div class="inputbox">
+                    <span>Patient_disease:</span>
+                    <input type="text" name="patient_disease">
+                </div>
+            </div>
+            <button class="savebutton">Register</button>
+        </form>
+    </div>
+</body>
+</html>

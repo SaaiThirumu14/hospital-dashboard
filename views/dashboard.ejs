@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body>
+    <div class="left-page">
+        <div class="left-inner">
+        <a href="/addpatient" class="tagbutton">Addpatient</a>
+        <a href="/" class="tagbutton">Logout</a>
+        </div>
+    </div>
+    <div class="right-page">
+        <h1>Patient Details</h1>
+        <table>
+            <tr>
+                <td style="width: 10px;"> patient_id</td>
+                <td style="width: 10px;">patient_name</td>
+                <td style="width: 10px;">patient_age</td>
+                <td style="width: 10px;">patient_mobile</td>
+                <td style="width: 10px;">patient_address</td>
+                <td style="width: 10px;">patient_disease</td>
+                <td style="width: 10px;">Edit</td>
+                <td style="width: 10px;">Delete</td>
+            </tr>
+            <% data.forEach((get)=>{ %>
+                <tr>
+                    <td style="width: 10px;"><%= get.patient_id %></td>
+                    <td style="width: 10px;"><%= get.patient_Name %></td>
+                    <td style="width: 10px;"><%= get.patient_age %></td>
+                    <td style="width: 10px;"><%= get.patient_mobile %></td>
+                    <td style="width: 10px;"><%= get.patient_address %></td>
+                    <td style="width: 10px;"><%= get.patient_disease %></td>
+                    <td style="width: 10px;"><a  class="hreftag" href="/update/<%=get.patient_id%>">
+                        Edit      
+                    </a>
+                </td>
+                <td style="width: 10px;"><form action="/delete/<%=get.patient_id %>?_method=DELETE">
+                    <button class="deletebutton">Delete</button>
+                </form>    
+            </td>
+                </tr>
+          <%  }) %>
+        </table>
+    </div>
+</body>
+</html>
