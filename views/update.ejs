@@ -3,46 +3,246 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/update.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Update Patient</title>
 </head>
-<body>
-    <div class="left-page">
-        <div class="left-inner">
-        <a href="/dashboard" class="tagbutton">Dashboard</a>
-        <a href="/addpatient" class="tagbutton">Addpatient</a>
-        </div>
-    </div>
-    <div class="right-page">
-        <h1>Changes</h1>
-        <form action="/update/<%=data.patient_id %>?_method=put" method="post">
-            <div class="contentbox">
-                <div class="inputbox">
-                    <span>Patient_id:</span>
-                    <input type="number" name="patient_id" value="<%= data.patient_id %>">
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <div class="flex min-h-screen">
+        <!-- Left Sidebar -->
+        <div class="w-64 bg-gradient-to-b from-indigo-600 to-indigo-800 shadow-2xl">
+            <div class="p-8 flex flex-col h-full">
+                <div class="mb-12">
+                    <h2 class="text-white text-2xl font-bold mb-2">MediCare</h2>
+                    <p class="text-indigo-200 text-sm">Patient Management</p>
                 </div>
-                <div class="inputbox">
-                    <span>Patient_name:</span>
-                    <input type="text" name="patient_Name" value="<%= data.patient_Name %>">
+                
+                <div class="flex flex-col gap-4 flex-grow">
+                    <a href="/dashboard" class="bg-white bg-opacity-10 hover:bg-opacity-20 text-white px-6 py-3 rounded-lg transition-all duration-300 backdrop-blur-sm font-medium flex items-center gap-2 group">
+                        <svg class="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                        </svg>
+                        Dashboard
+                    </a>
+                    <a href="/addpatient" class="bg-white bg-opacity-10 hover:bg-opacity-20 text-white px-6 py-3 rounded-lg transition-all duration-300 backdrop-blur-sm font-medium flex items-center gap-2 group">
+                        <svg class="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
+                        </svg>
+                        Add Patient
+                    </a>
                 </div>
-                <div class="inputbox">
-                    <span>Patient_age:</span>
-                    <input type="text" name="patient_age" value="<%= data.patient_age %>">
-                </div>
-                <div class="inputbox">
-                    <span>Patient_mobile</span>
-                    <input type="text" name="patient_mobile" value="<%= data.patient_mobile %>">
-                </div>
-                <div class="inputbox">
-                    <span>Patient_address:</span>
-                    <input type="text" name="patient_address" value="<%= data.patient_address %>">
-                </div>
-                <div class="inputbox">
-                    <span>Patient_disease:</span>
-                    <input type="text" name="patient_disease" value="<%= data.patient_disease %>">
+
+                <div class="mt-auto pt-8 border-t border-white border-opacity-20">
+                    <p class="text-indigo-200 text-xs text-center">© 2024 MediCare System</p>
                 </div>
             </div>
-            <button class="savebutton">Update</button>
-        </form>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 p-8 overflow-auto">
+            <div class="max-w-4xl mx-auto">
+                <!-- Header with Back Button -->
+                <div class="mb-8 flex items-center gap-4">
+                    <a href="/dashboard" class="bg-white p-2 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 group">
+                        <svg class="w-6 h-6 text-gray-600 group-hover:text-indigo-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                        </svg>
+                    </a>
+                    <div>
+                        <h1 class="text-4xl font-bold text-gray-800 mb-2">Update Patient Record</h1>
+                        <p class="text-gray-600">Modify patient information - Patient ID: <span class="font-semibold text-indigo-600"><%= data.patient_id %></span></p>
+                    </div>
+                </div>
+
+                <!-- Info Alert -->
+                <div class="mb-6 bg-amber-50 border-l-4 border-amber-500 p-4 rounded-lg">
+                    <div class="flex items-start">
+                        <svg class="w-5 h-5 text-amber-500 mt-0.5 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                        </svg>
+                        <div>
+                            <p class="text-sm text-gray-700">
+                                <span class="font-semibold">Warning:</span> You are editing existing patient records. Please ensure all changes are accurate before updating.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form Card -->
+                <div class="bg-white rounded-2xl shadow-xl p-8 backdrop-blur-sm border border-gray-100">
+                    <form action="/update/<%=data.patient_id %>?_method=put" method="post" onsubmit="return confirmUpdate()">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                            <!-- Patient ID -->
+                            <div class="form-group">
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                    Patient ID
+                                    <span class="text-red-500">*</span>
+                                </label>
+                                <div class="relative">
+                                    <input 
+                                        type="number" 
+                                        name="patient_id" 
+                                        value="<%= data.patient_id %>"
+                                        required
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 outline-none"
+                                        readonly>
+                                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <p class="mt-1 text-xs text-gray-500">Patient ID cannot be changed</p>
+                            </div>
+
+                            <!-- Patient Name -->
+                            <div class="form-group">
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                    Patient Name
+                                    <span class="text-red-500">*</span>
+                                </label>
+                                <input 
+                                    type="text" 
+                                    name="patient_Name" 
+                                    value="<%= data.patient_Name %>"
+                                    required
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 outline-none hover:border-indigo-300"
+                                    placeholder="Enter full name">
+                            </div>
+
+                            <!-- Patient Age -->
+                            <div class="form-group">
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                    Age
+                                    <span class="text-red-500">*</span>
+                                </label>
+                                <input 
+                                    type="number" 
+                                    name="patient_age" 
+                                    value="<%= data.patient_age %>"
+                                    required
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 outline-none hover:border-indigo-300"
+                                    placeholder="Enter age">
+                            </div>
+
+                            <!-- Patient Mobile -->
+                            <div class="form-group">
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                    Mobile Number
+                                    <span class="text-red-500">*</span>
+                                </label>
+                                <input 
+                                    type="tel" 
+                                    name="patient_mobile" 
+                                    value="<%= data.patient_mobile %>"
+                                    required
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 outline-none hover:border-indigo-300"
+                                    placeholder="Enter mobile number">
+                            </div>
+
+                            <!-- Patient Address -->
+                            <div class="form-group md:col-span-2">
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                    Address
+                                    <span class="text-red-500">*</span>
+                                </label>
+                                <textarea 
+                                    name="patient_address" 
+                                    required
+                                    rows="3"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 outline-none hover:border-indigo-300 resize-none"
+                                    placeholder="Enter full address"><%= data.patient_address %></textarea>
+                            </div>
+
+                            <!-- Patient Disease -->
+                            <div class="form-group md:col-span-2">
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                    Disease / Condition
+                                    <span class="text-red-500">*</span>
+                                </label>
+                                <input 
+                                    type="text" 
+                                    name="patient_disease" 
+                                    value="<%= data.patient_disease %>"
+                                    required
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 outline-none hover:border-indigo-300"
+                                    placeholder="Enter disease or medical condition">
+                            </div>
+                        </div>
+
+                        <!-- Change Summary -->
+                        <div class="mb-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
+                            <h3 class="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+                                <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                Review Changes
+                            </h3>
+                            <p class="text-sm text-gray-600">
+                                Please review all modifications carefully. Click "Update Patient" to save changes or "Cancel" to discard.
+                            </p>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="flex justify-between gap-4">
+                            <a 
+                                href="/dashboard"
+                                class="px-8 py-3 bg-gray-100 text-gray-700 rounded-lg font-semibold hover:bg-gray-200 transition-all duration-300 flex items-center gap-2">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                                Cancel
+                            </a>
+                            <button 
+                                type="submit"
+                                class="px-8 py-3 bg-gradient-to-r from-green-600 to-green-700 text-white rounded-lg font-semibold hover:from-green-700 hover:to-green-800 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center gap-2">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                Update Patient
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Additional Info -->
+                <div class="mt-6 bg-gray-50 border border-gray-200 p-4 rounded-lg">
+                    <div class="flex items-start">
+                        <svg class="w-5 h-5 text-gray-500 mt-0.5 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+                        </svg>
+                        <div>
+                            <p class="text-sm text-gray-700">
+                                <span class="font-semibold">Note:</span> All changes are logged and timestamped for audit purposes. Only authorized personnel should update patient records.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <script>
+        function confirmUpdate() {
+            return confirm('Are you sure you want to update this patient record? This action will modify the existing data.');
+        }
+
+        // Add visual feedback for changed fields
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputs = document.querySelectorAll('input:not([readonly]), textarea');
+            const originalValues = {};
+
+            inputs.forEach(input => {
+                originalValues[input.name] = input.value;
+                
+                input.addEventListener('input', function() {
+                    if (this.value !== originalValues[this.name]) {
+                        this.classList.add('border-amber-400', 'bg-amber-50');
+                    } else {
+                        this.classList.remove('border-amber-400', 'bg-amber-50');
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
