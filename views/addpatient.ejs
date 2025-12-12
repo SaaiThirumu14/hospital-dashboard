@@ -3,46 +3,169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/addpatient.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Patient Registration</title>
 </head>
-<body>
-    <div class="left-page">
-        <div class="left-inner">
-        <a href="/dashboard" class="tagbutton">Dashboard</a>
-        <a href="/" class="tagbutton">Logout</a>
-        </div>
-    </div>
-    <div class="right-page">
-        <h1>Enter the Patient Details</h1>
-        <form action="/addpatient" method="post">
-            <div class="contentbox">
-                <div class="inputbox">
-                    <span>Patient_id:</span>
-                    <input type="number" name="patient_id">
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <div class="flex min-h-screen">
+        <!-- Left Sidebar -->
+        <div class="w-64 bg-gradient-to-b from-indigo-600 to-indigo-800 shadow-2xl">
+            <div class="p-8 flex flex-col h-full">
+                <div class="mb-12">
+                    <h2 class="text-white text-2xl font-bold mb-2">MediCare</h2>
+                    <p class="text-indigo-200 text-sm">Patient Management</p>
                 </div>
-                <div class="inputbox">
-                    <span>Patient_name:</span>
-                    <input type="text" name="patient_Name">
+                
+                <div class="flex flex-col gap-4 flex-grow">
+                    <a href="/dashboard" class="bg-white bg-opacity-10 hover:bg-opacity-20 text-white px-6 py-3 rounded-lg transition-all duration-300 backdrop-blur-sm font-medium flex items-center gap-2 group">
+                        <svg class="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                        </svg>
+                        Dashboard
+                    </a>
+                    <a href="/" class="bg-red-500 bg-opacity-80 hover:bg-opacity-100 text-white px-6 py-3 rounded-lg transition-all duration-300 font-medium flex items-center gap-2 group">
+                        <svg class="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                        </svg>
+                        Logout
+                    </a>
                 </div>
-                <div class="inputbox">
-                    <span>Patient_age:</span>
-                    <input type="text" name="patient_age">
-                </div>
-                <div class="inputbox">
-                    <span>Patient_mobile</span>
-                    <input type="text" name="patient_mobile">
-                </div>
-                <div class="inputbox">
-                    <span>Patient_address:</span>
-                    <input type="text" name="patient_address">
-                </div>
-                <div class="inputbox">
-                    <span>Patient_disease:</span>
-                    <input type="text" name="patient_disease">
+
+                <div class="mt-auto pt-8 border-t border-white border-opacity-20">
+                    <p class="text-indigo-200 text-xs text-center">© 2024 MediCare System</p>
                 </div>
             </div>
-            <button class="savebutton">Register</button>
-        </form>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 p-8 overflow-auto">
+            <div class="max-w-4xl mx-auto">
+                <!-- Header -->
+                <div class="mb-8">
+                    <h1 class="text-4xl font-bold text-gray-800 mb-2">Patient Registration</h1>
+                    <p class="text-gray-600">Enter the patient details to create a new record</p>
+                </div>
+
+                <!-- Form Card -->
+                <div class="bg-white rounded-2xl shadow-xl p-8 backdrop-blur-sm border border-gray-100">
+                    <form action="/addpatient" method="post">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                            <!-- Patient ID -->
+                            <div class="form-group">
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                    Patient ID
+                                    <span class="text-red-500">*</span>
+                                </label>
+                                <input 
+                                    type="number" 
+                                    name="patient_id" 
+                                    required
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 outline-none"
+                                    placeholder="Enter patient ID">
+                            </div>
+
+                            <!-- Patient Name -->
+                            <div class="form-group">
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                    Patient Name
+                                    <span class="text-red-500">*</span>
+                                </label>
+                                <input 
+                                    type="text" 
+                                    name="patient_Name" 
+                                    required
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 outline-none"
+                                    placeholder="Enter full name">
+                            </div>
+
+                            <!-- Patient Age -->
+                            <div class="form-group">
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                    Age
+                                    <span class="text-red-500">*</span>
+                                </label>
+                                <input 
+                                    type="number" 
+                                    name="patient_age" 
+                                    required
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 outline-none"
+                                    placeholder="Enter age">
+                            </div>
+
+                            <!-- Patient Mobile -->
+                            <div class="form-group">
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                    Mobile Number
+                                    <span class="text-red-500">*</span>
+                                </label>
+                                <input 
+                                    type="tel" 
+                                    name="patient_mobile" 
+                                    required
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 outline-none"
+                                    placeholder="Enter mobile number">
+                            </div>
+
+                            <!-- Patient Address -->
+                            <div class="form-group md:col-span-2">
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                    Address
+                                    <span class="text-red-500">*</span>
+                                </label>
+                                <input 
+                                    type="text" 
+                                    name="patient_address" 
+                                    required
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 outline-none"
+                                    placeholder="Enter full address">
+                            </div>
+
+                            <!-- Patient Disease -->
+                            <div class="form-group md:col-span-2">
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                                    Disease / Condition
+                                    <span class="text-red-500">*</span>
+                                </label>
+                                <input 
+                                    type="text" 
+                                    name="patient_disease" 
+                                    required
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 outline-none"
+                                    placeholder="Enter disease or medical condition">
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="flex justify-end gap-4">
+                            <button 
+                                type="reset"
+                                class="px-8 py-3 bg-gray-100 text-gray-700 rounded-lg font-semibold hover:bg-gray-200 transition-all duration-300">
+                                Reset
+                            </button>
+                            <button 
+                                type="submit"
+                                class="px-8 py-3 bg-gradient-to-r from-indigo-600 to-indigo-700 text-white rounded-lg font-semibold hover:from-indigo-700 hover:to-indigo-800 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                                Register Patient
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Info Card -->
+                <div class="mt-6 bg-blue-50 border-l-4 border-indigo-500 p-4 rounded-lg">
+                    <div class="flex items-start">
+                        <svg class="w-5 h-5 text-indigo-500 mt-0.5 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+                        </svg>
+                        <div>
+                            <p class="text-sm text-gray-700">
+                                <span class="font-semibold">Note:</span> All fields marked with <span class="text-red-500">*</span> are required. Please ensure all information is accurate before submitting.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>
