@@ -3,47 +3,192 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/dashboard.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Patient Dashboard</title>
 </head>
-<body>
-    <div class="left-page">
-        <div class="left-inner">
-        <a href="/addpatient" class="tagbutton">Addpatient</a>
-        <a href="/" class="tagbutton">Logout</a>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <div class="flex min-h-screen">
+        <!-- Left Sidebar -->
+        <div class="w-64 bg-gradient-to-b from-indigo-600 to-indigo-800 shadow-2xl">
+            <div class="p-8 flex flex-col h-full">
+                <div class="mb-12">
+                    <h2 class="text-white text-2xl font-bold mb-2">MediCare</h2>
+                    <p class="text-indigo-200 text-sm">Patient Management</p>
+                </div>
+                
+                <div class="flex flex-col gap-4 flex-grow">
+                    <a href="/addpatient" class="bg-white bg-opacity-10 hover:bg-opacity-20 text-white px-6 py-3 rounded-lg transition-all duration-300 backdrop-blur-sm font-medium flex items-center gap-2 group">
+                        <svg class="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
+                        </svg>
+                        Add Patient
+                    </a>
+                    <a href="/" class="bg-red-500 bg-opacity-80 hover:bg-opacity-100 text-white px-6 py-3 rounded-lg transition-all duration-300 font-medium flex items-center gap-2 group">
+                        <svg class="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                        </svg>
+                        Logout
+                    </a>
+                </div>
+
+                <div class="mt-auto pt-8 border-t border-white border-opacity-20">
+                    <p class="text-indigo-200 text-xs text-center">© 2024 MediCare System</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 p-8 overflow-auto">
+            <div class="max-w-7xl mx-auto">
+                <!-- Header -->
+                <div class="mb-8 flex justify-between items-center">
+                    <div>
+                        <h1 class="text-4xl font-bold text-gray-800 mb-2">Patient Records</h1>
+                        <p class="text-gray-600">View and manage patient information</p>
+                    </div>
+                    <div class="bg-white px-6 py-3 rounded-lg shadow-md">
+                        <p class="text-sm text-gray-600">Total Patients</p>
+                        <p class="text-2xl font-bold text-indigo-600"><%= data.length %></p>
+                    </div>
+                </div>
+
+                <!-- Search Bar -->
+                <div class="mb-6 bg-white rounded-xl shadow-md p-4">
+                    <div class="flex items-center gap-2">
+                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                        <input 
+                            type="text" 
+                            id="searchInput"
+                            placeholder="Search by name, ID, mobile, or disease..."
+                            class="flex-1 outline-none text-gray-700"
+                            onkeyup="filterTable()">
+                    </div>
+                </div>
+
+                <!-- Table Card -->
+                <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full" id="patientTable">
+                            <thead>
+                                <tr class="bg-gradient-to-r from-indigo-600 to-indigo-700 text-white">
+                                    <th class="px-6 py-4 text-left text-sm font-semibold">Patient ID</th>
+                                    <th class="px-6 py-4 text-left text-sm font-semibold">Name</th>
+                                    <th class="px-6 py-4 text-left text-sm font-semibold">Age</th>
+                                    <th class="px-6 py-4 text-left text-sm font-semibold">Mobile</th>
+                                    <th class="px-6 py-4 text-left text-sm font-semibold">Address</th>
+                                    <th class="px-6 py-4 text-left text-sm font-semibold">Disease</th>
+                                    <th class="px-6 py-4 text-center text-sm font-semibold">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200">
+                                <% data.forEach((get, index)=>{ %>
+                                <tr class="hover:bg-indigo-50 transition-colors duration-200">
+                                    <td class="px-6 py-4 text-sm font-medium text-gray-900">
+                                        <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-xs font-semibold">
+                                            <%= get.patient_id %>
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-900 font-medium"><%= get.patient_Name %></td>
+                                    <td class="px-6 py-4 text-sm text-gray-700"><%= get.patient_age %></td>
+                                    <td class="px-6 py-4 text-sm text-gray-700"><%= get.patient_mobile %></td>
+                                    <td class="px-6 py-4 text-sm text-gray-700 max-w-xs truncate" title="<%= get.patient_address %>">
+                                        <%= get.patient_address %>
+                                    </td>
+                                    <td class="px-6 py-4 text-sm">
+                                        <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-xs font-medium">
+                                            <%= get.patient_disease %>
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 text-sm">
+                                        <div class="flex items-center justify-center gap-2">
+                                            <a href="/update/<%=get.patient_id%>" 
+                                               class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg flex items-center gap-1">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                                </svg>
+                                                Edit
+                                            </a>
+                                            <form action="/delete/<%=get.patient_id %>?_method=DELETE" method="POST" onsubmit="return confirm('Are you sure you want to delete this patient record?');">
+                                                <button type="submit"
+                                                        class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg flex items-center gap-1">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                                    </svg>
+                                                    Delete
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Empty State -->
+                    <% if (data.length === 0) { %>
+                    <div class="text-center py-12">
+                        <svg class="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path>
+                        </svg>
+                        <h3 class="text-xl font-semibold text-gray-700 mb-2">No Patients Found</h3>
+                        <p class="text-gray-500 mb-4">Start by adding a new patient to the system</p>
+                        <a href="/addpatient" class="inline-block bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg font-medium transition-all duration-300">
+                            Add First Patient
+                        </a>
+                    </div>
+                    <% } %>
+                </div>
+
+                <!-- Info Card -->
+                <div class="mt-6 bg-blue-50 border-l-4 border-indigo-500 p-4 rounded-lg">
+                    <div class="flex items-start">
+                        <svg class="w-5 h-5 text-indigo-500 mt-0.5 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+                        </svg>
+                        <div>
+                            <p class="text-sm text-gray-700">
+                                <span class="font-semibold">Tip:</span> Click on any row to view details. Use the search bar to quickly find specific patient records.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="right-page">
-        <h1>Patient Details</h1>
-        <table>
-            <tr>
-                <td style="width: 10px;"> patient_id</td>
-                <td style="width: 10px;">patient_name</td>
-                <td style="width: 10px;">patient_age</td>
-                <td style="width: 10px;">patient_mobile</td>
-                <td style="width: 10px;">patient_address</td>
-                <td style="width: 10px;">patient_disease</td>
-                <td style="width: 10px;">Edit</td>
-                <td style="width: 10px;">Delete</td>
-            </tr>
-            <% data.forEach((get)=>{ %>
-                <tr>
-                    <td style="width: 10px;"><%= get.patient_id %></td>
-                    <td style="width: 10px;"><%= get.patient_Name %></td>
-                    <td style="width: 10px;"><%= get.patient_age %></td>
-                    <td style="width: 10px;"><%= get.patient_mobile %></td>
-                    <td style="width: 10px;"><%= get.patient_address %></td>
-                    <td style="width: 10px;"><%= get.patient_disease %></td>
-                    <td style="width: 10px;"><a  class="hreftag" href="/update/<%=get.patient_id%>">
-                        Edit      
-                    </a>
-                </td>
-                <td style="width: 10px;"><form action="/delete/<%=get.patient_id %>?_method=DELETE">
-                    <button class="deletebutton">Delete</button>
-                </form>    
-            </td>
-                </tr>
-          <%  }) %>
-        </table>
-    </div>
+
+    <script>
+        function filterTable() {
+            const input = document.getElementById('searchInput');
+            const filter = input.value.toLowerCase();
+            const table = document.getElementById('patientTable');
+            const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+
+            for (let i = 0; i < rows.length; i++) {
+                const row = rows[i];
+                const cells = row.getElementsByTagName('td');
+                let found = false;
+
+                for (let j = 0; j < cells.length - 1; j++) {
+                    const cell = cells[j];
+                    if (cell) {
+                        const textValue = cell.textContent || cell.innerText;
+                        if (textValue.toLowerCase().indexOf(filter) > -1) {
+                            found = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (found) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            }
+        }
+    </script>
 </body>
 </html>
